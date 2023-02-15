@@ -9,10 +9,9 @@
         <div class="p-4 lg:p-5 xl:px-10 xl:py-5 2xl:px-20 2xl:py-10">
            {{ $video->title }}
         </div>
-        <div class="p-3 lg:p-5 xl:px-10 xl:py-5 2xl:px-20 2xl:py-10">
+        <div class="p-4 lg:p-5 xl:px-10 xl:py-5 2xl:px-20 2xl:py-10">
            {{$video->description}}
         </div>
     </div>
 </x-casteaching-layout>
-
 
