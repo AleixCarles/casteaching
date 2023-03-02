@@ -2,10 +2,8 @@
 
 namespace Tests\Feature\Videos;
 
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class VideosManageControllerTest extends TestCase
@@ -24,6 +22,27 @@ class VideosManageControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    /**
+     *
+     * @test
+     *
+     */
+    public function regular_users_cannot_manage_videos()
+    {
+        $this->loginAsRegularUser();
+        $response = $this->get('/manage/videos');
+        $response->assertStatus(403);
+    }    /**
+     *
+     * @test
+     *
+     */
+    public function guest_users_cannot_manage_videos()
+    {
+        $response = $this->get('/manage/videos');
+        $response->assertRedirect(route('login'));
+    }
     /**
      *
      * @test
@@ -36,27 +55,23 @@ class VideosManageControllerTest extends TestCase
         $response = $this->get('/manage/videos');
 
         $response->assertStatus(200);
+        $response->assertViewIs('videos.manage.index');
     }
 
     private function loginAsVideoManager()
     {
-       $user = User::create([
-            'name' => 'VideosManager',
-            'email' => 'videosmanager@casteaching.com',
-            'password' => Hash::make('12345678')
-        ]);
-
-       Auth::login($user);
+       Auth::login(create_video_manager_user());
     }
 
     private function loginAsSuperAdmin()
     {
-        Auth::login(User::create([
-            'name' => 'SuperAdmin',
-            'email' => 'superadmin@casteaching.com',
-            'password' => Hash::make('12345678'),
-            'super_admin' => true
-        ]));
+        Auth::login(create_superadmin_user());
+    }
+
+    private function loginAsRegularUser()
+    {
+        Auth::login(create_regular_user());
+
     }
 }
 //18:25

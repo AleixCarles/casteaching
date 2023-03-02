@@ -11,7 +11,7 @@ class VideosManagerController extends Controller
      */
     public function index()
     {
-        //
+        return view('videos.manage.index');
     }
 
     /**

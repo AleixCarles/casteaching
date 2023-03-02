@@ -27,10 +27,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        Gate::define('videos_manage_index',function (User $user){
-            if ($user->isSuperAdmin()) return true;
-           return false;
-        });
+
+        define_gates();
 
     }
 }
