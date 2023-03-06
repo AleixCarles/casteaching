@@ -2,10 +2,17 @@
 
 namespace Tests\Feature\Videos;
 
+use App\Models\User;
+use App\Models\Video;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
+
+/**
+ * @covers VideosManagerController
+ */
 class VideosManageControllerTest extends TestCase
 {
     use RefreshDatabase;
@@ -17,10 +24,19 @@ class VideosManageControllerTest extends TestCase
     public function user_with_permissions_can_manage_videos()
     {
         $this->loginAsVideoManager();
+        $videos = create_sample_videos();
 
         $response = $this->get('/manage/videos');
-
         $response->assertStatus(200);
+        $response->assertViewIs('videos.manage.index');
+        $response->assertViewHas('videos',function ($v) use ($videos){
+            return  $v->count() === count($videos) && get_class($v) === Collection::class &&
+                get_class($videos[0])=== Video::class;
+        });
+        foreach ($videos as $video) {
+            $response->assertSee($video-> id);
+            $response->assertSee($video-> title);
+        }
     }
 
     /**
