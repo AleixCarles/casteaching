@@ -134,9 +134,27 @@ if (! function_exists('define_gates')) {
 
     }
 }
+
+if (!function_exists('create_user_manager_user')) {
+    function create_user_manager_user(){
+        $user = User::create([
+            'name' => 'UserManager',
+            'email' => 'usersmanager@casteaching.com',
+            'password' => Hash::make('12345678'),
+        ]);
+
+        Permission::create(['name' => 'users_manage_index']);
+        $user->givePermissionTo('users_manage_index');
+        add_personal_team($user);
+        return $user;
+    }
+}
+
 if (! function_exists('create_permissions')) {
     function create_permissions(){
         Permission::firstOrCreate(['name'=>'videos_manage_index']);
+        Permission::firstOrCreate(['name' => 'users_manage_index']);
+        Permission::firstOrCreate(['name' => 'videos_manage_create']);
     }
 }
 
