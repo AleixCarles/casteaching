@@ -163,21 +163,102 @@ if (! function_exists('create_permissions')) {
 if (! function_exists('create_sample_videos')) {
     function create_sample_videos()
     {
-   $video1 = Video::create([
-        'title'=> 'Video 1',
-        'description'=> 'Prova',
-        'url'=> 'https://youtu.be/syqUFgWSKcA'
-    ]);
-   $video2 =Video::create([
-        'title'=> 'Video 2',
-        'description'=> 'Prova',
-        'url'=> 'https://youtu.be/jX6aHnvWOO4'
-    ]);
-   $video3 =Video::create([
-        'title'=> 'Video 3',
-        'description'=> 'Prova',
-        'url'=> 'https://youtu.be/zyABmm6Dw64'
-    ]);
-   return [$video1, $video2, $video3];
+        $video1 = Video::create([
+            'title' => 'Video 1',
+            'description' => 'Prova',
+            'url' => 'https://youtu.be/syqUFgWSKcA'
+        ]);
+        $video2 = Video::create([
+            'title' => 'Video 2',
+            'description' => 'Prova',
+            'url' => 'https://youtu.be/jX6aHnvWOO4'
+        ]);
+        $video3 = Video::create([
+            'title' => 'Video 3',
+            'description' => 'Prova',
+            'url' => 'https://youtu.be/zyABmm6Dw64'
+        ]);
+        return [$video1, $video2, $video3];
+    }
+}
+
+if (! function_exists('create_sample_users')) {
+    function create_sample_users()
+    {
+        $user1 = User::create([
+            'name' => 'User 1',
+            'email' => 'user1@prova.com',
+            'password' => Hash::make('12345678')
+        ]);
+        $user2 = User::create([
+            'name' => 'User 2',
+            'email' => 'user2@prova.com',
+            'password' => Hash::make('12345678')
+        ]);
+        $user3 = User::create([
+            'name' => 'User 3',
+            'email' => 'user3@prova.com',
+            'password' => Hash::make('12345678')
+        ]);
+        return [$user1, $user2, $user3];
+    }
+}
+class DomainObject implements ArrayAccess, JsonSerializable
+{
+    private $data = [];
+
+    /**
+     * DomainObject constructor.
+     */
+    public function __construct($data)
+    {
+        $this->data = $data;
+    }
+
+    public function __get($name)
+    {
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
+        }
+    }
+
+    public function __set($name, $value)
+    {
+        $this->data[$name] = $value;
+    }
+
+    public function offsetExists($offset)
+    {
+        return array_key_exists($offset, $this->data);
+    }
+
+    public function offsetSet($offset, $value)
+    {
+        $this->data[$offset] = $value;
+    }
+
+    public function offsetGet($offset)
+    {
+        return $this->data[$offset];
+    }
+
+    public function offsetUnset($offset)
+    {
+        unset($this->data[$offset]);
+    }
+
+    public function __toString()
+    {
+        return (string) collect($this->data);
+    }
+    public function jsonSerialize()
+    {
+        return $this->data;
+    }
+}
+
+if (! function_exists('objectify')){
+    function objectify($array){
+        return new DomainObject($array);
     }
 }

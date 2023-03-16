@@ -1,9 +1,38 @@
 <x-casteaching-layout>
 
     <div class="mt-8 flow-root">
+        @if(session()->has('status'))
+            <div class="rounded-md bg-green-50 p-4">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <!-- Heroicon name: mini/check-circle -->
+                        <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-green-800">
+                            Successfully created
+                        </p>
+                    </div>
+                    <div class="ml-auto pl-3">
+                        <div class="-mx-1.5 -my-1.5">
+                            <button type="button" class="inline-flex rounded-md bg-green-50 p-1.5 text-green-500 hover:bg-green-100 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 focus:ring-offset-green-50">
+                                <span class="sr-only">Dismiss</span>
+                                <!-- Heroicon name: mini/x-mark -->
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
         @can('videos_manage_create')
             <div class="-my2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+
                     <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                         <div class="md:grid md:grid-cols-3 md:gap-6">
                             <div class="md:col-span-1">
@@ -20,10 +49,10 @@
                                         <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                             <div>
                                                 <label for="title" class="block text-sm font-medium text-gray-700">
-                                                    Title
+                                                    Title *
                                                 </label>
                                                 <div class="mt-1">
-                                                    <input id="title" type="text" name="title"
+                                                    <input required id="title" type="text" name="title"
                                                            class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                            placeholder="Example title">
                                                 </div>
@@ -38,16 +67,18 @@
                                                     Description
                                                 </label>
                                                 <div class="mt-1">
-                                                    <textarea id="description" name="description" rows="3"
+                                                    <textarea required id="description" name="description" rows="3"
                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                               placeholder="Description"></textarea>
                                                 </div>
                                                 <p class="mt-2 text-sm text-gray-500">
-                                                    Enter a good description so people know what the video is about.</p>
+                                                    Enter a good description so people know what the video is
+                                                    about.</p>
                                             </div>
                                             <div class="grid grid-cols-3 gap-6">
                                                 <div class="col-span-3 sm:col-span-2">
-                                                    <label for="url" class="block text-sm font-medium text-gray-700">
+                                                    <label for="url"
+                                                           class="block text-sm font-medium text-gray-700">
                                                         URL
                                                     </label>
                                                     <div class="mt-1 flex rounded-md shadow-sm">
@@ -55,7 +86,7 @@
                                             class="inline-flex items-center rounded-l-md border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
                                             http://
                                         </span>
-                                                        <input type="url" name="url" id="url"
+                                                        <input required type="url" name="url" id="url"
                                                                class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                                placeholder="www.example.com">
                                                     </div>
@@ -86,11 +117,13 @@
                 <table class="min-w-full divide-y divide-gray-300">
                     <thead>
                     <tr>
-                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                        <th scope="col"
+                            class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                             Id
                         </th>
                         <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Title</th>
-                        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">Description
+                        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">
+                            Description
                         </th>
                         <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-gray-900">URL</th>
                         <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-0">

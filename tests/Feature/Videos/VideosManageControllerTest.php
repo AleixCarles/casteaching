@@ -20,6 +20,35 @@ class VideosManageControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function user_with_permissions_can_store_videos()
+    {
+        $this->loginAsVideoManager();
+
+        $video = objectify([
+            'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
+            'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+
+        $response = $this->post('/manage/videos',[
+            'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
+            'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+        $response->assertRedirect(route('manage.videos'));
+        $response->assertSessionHas('status', 'Successfully created');
+
+        $videoDB = Video::first();
+        $this->assertNotNull($videoDB);
+        $this->assertEquals($videoDB->title, $video->title);
+        $this->assertEquals($videoDB->description, $video->description);
+        $this->assertEquals($videoDB->url, $video->url);
+        $this->assertNull($videoDB->published_at);
+
+    }
+
+
+    /** @test */
     public function user_with_permissions_can_see_add_videos()
     {
         $this->loginAsVideoManager();
