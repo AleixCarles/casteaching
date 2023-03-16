@@ -16,7 +16,7 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
 
-                    <x-jet-nav-link href="/videos/1">
+                    <x-jet-nav-link href="/videos/1" :active="request()->routeIs('manage.videos')">
                         {{ __('Videos 1') }}
                     </x-jet-nav-link>
                     @can('videos_manage_index')
