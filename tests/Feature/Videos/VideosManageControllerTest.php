@@ -21,8 +21,6 @@ class VideosManageControllerTest extends TestCase
 
     /** @test */
     public function user_with_permissions_can_delete_videos() {
-        $this->withoutExceptionHandling();
-
         $this->loginAsVideoManager();
         $video = Video::create([
             'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
@@ -39,6 +37,26 @@ class VideosManageControllerTest extends TestCase
         $this->assertNull($video->fresh());
     }
 
+    /** @test  */
+    public function user_without_permissions_cannot_destroy_videos(){
+        $this->loginAsRegularUser();
+        $video = Video::create([
+            'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
+            'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+
+        $response = $this->delete('/manage/videos/' . $video->id);
+
+        $response->assertStatus(403);
+
+    }
+
+
+
+
+
+    /** @test  */
     public function user_with_permissions_can_store_videos()
     {
         $this->loginAsVideoManager();
