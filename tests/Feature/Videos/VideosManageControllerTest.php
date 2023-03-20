@@ -20,6 +20,25 @@ class VideosManageControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function user_with_permissions_can_delete_videos() {
+        $this->withoutExceptionHandling();
+
+        $this->loginAsVideoManager();
+        $video = Video::create([
+            'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
+            'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+
+        $response = $this->delete('/manage/videos/' . $video->id);
+
+        $response->assertRedirect(route('manage.videos'));
+        session()->flash('status','Successfully removed');
+
+        $this->assertNull(Video::find($video->id));
+        $this->assertNull($video->fresh());
+    }
+
     public function user_with_permissions_can_store_videos()
     {
         $this->loginAsVideoManager();
