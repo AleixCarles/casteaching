@@ -16,7 +16,7 @@
                                     <div class="md:col-span-1">
                                         <div class="px-4 sm:px-0">
                                             <h3 class="text-lg font-medium leading-6 text-gray-900">Videos</h3>
-                                            <p class="mt-1 text-sm text-gray-600">Informació basica del video</p>
+                                            <p class="mt-1 text-sm text-gray-600">Basic video information</p>
                                         </div>
                                     </div>
                                     <div class="mt-5 md:col-span-2 md:mt-0">
@@ -30,10 +30,9 @@
                                                         <div class="mt-1">
                                                             <input required id="title" name="title" type="text"
                                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
-                                                                   placeholder="Titol del video">
+                                                                   placeholder="Video Title">
                                                         </div>
-                                                        <p class="mt-2 text-sm text-gray-500">Titol curt del nostre
-                                                            video</p>
+                                                        <p class="mt-2 text-sm text-gray-500">Short title for our video.</p>
                                                     </div>
                                                     <div>
                                                         <label for="description"
@@ -43,9 +42,7 @@
                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                               placeholder="Description"></textarea>
                                                         </div>
-                                                        <p class="mt-2 text-sm text-gray-500">Brief description for your
-                                                            profile. URLs
-                                                            are hyperlinked.</p>
+                                                        <p class="mt-2 text-sm text-gray-500">Description with a short summary of the video.</p>
                                                     </div>
 
                                                     <div class="grid grid-cols-3 gap-6">
@@ -59,13 +56,15 @@
                                                                        class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                                        placeholder="www.example.com">
                                                             </div>
+                                                            <p class="mt-2 text-sm text-gray-500">Video link.</p>
+
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                                                     <button type="submit"
                                                             class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                        Crear
+                                                        Create
                                                     </button>
                                                 </div>
                                             </div>
@@ -107,8 +106,13 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200 bg-white">
+                                    <tbody>
                                     @foreach($videos as $video)
+                                        @if($loop->even)
+                                            <tr class="bg-white">
+                                        @else
+                                            <tr class="bg-gray-50"
+                                        @endif
                                         <tr>
                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                                 {{ $video->id }}</td>
@@ -117,18 +121,22 @@
                                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $video->url }}</td>
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                                 <a href="/videos/{{ $video->id }}" target="_blank"
-                                                   class="text-indigo-600 hover:text-indigo-900">Show<span
-                                                        class="sr-only"></span></a>
+                                                   class="text-indigo-600 hover:text-indigo-900">Show</a>
                                                 {{--                                        <a href="/users/{{ $user->id }}" target="_blank" class="text-indigo-600 hover:text-indigo-900">Show<span class="sr-only"></span></a>--}}
-                                                <a href="#" class="text-green-600 hover:text-indigo-900">Edit<span
-                                                        class="sr-only"></span></a>
+                                                <form class="inline" method="POST"
+                                                      action="/manage/videos/{{ $video->id }}">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <a href="/videos/{{ $video->id }}" class="text-indigo-600 hover:text-indigo-900"
+                                                       onclick="event.preventDefault('form');
+                                                       this.closest('form').submit()">Edit</a>
+                                                </form>
                                                 <form class="inline" method="POST"
                                                       action="/manage/videos/{{ $video->id }}">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <a href="#" class="text-red-600 hover:text-indigo-900"
-                                                       onclick="event.preventDefault('form'); this.closest('form').submit()">Delete<span
-                                                            class="sr-only"></span></a>
+                                                    <a href="/videos/{{ $video->id }}" class="text-indigo-600 hover:text-indigo-900"
+                                                       onclick="event.preventDefault('form'); this.closest('form').submit()">Delete</a>
                                                 </form>
 
                                             </td>

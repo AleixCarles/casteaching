@@ -20,6 +20,52 @@ class VideosManageControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
+    public function user_witch_permissions_can_see_update_videos()
+    {
+        $this->loginAsVideoManager();
+        $video = Video::create([
+            'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
+            'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+        $response = $this->put('/manage/videos/' . $video->id,[
+            'title' => 'Prova del edit',
+            'description' => 'Laravel Eloquent',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+        $response->assertRedirect(route('manage.videos'));
+        $response->assertSessionHas('status', 'Successfully edited');
+
+        $newVideo = Video::find($video->id);
+        $this->assertEquals('Prova del edit', $newVideo->title);
+        $this->assertEquals('Laravel Eloquent', $newVideo->description);
+        $this->assertEquals('https://youtu.be/Tt8z8X8xv14', $newVideo->url);
+        $this->assertEquals($video->id, $newVideo->url);
+    }
+
+        /** @test */
+    public function user_witch_permissions_can_see_edit_videos()
+    {
+        $this->loginAsVideoManager();
+        $video = Video::create([
+            'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
+            'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
+            'url' => 'https://youtu.be/Tt8z8X8xv14',
+        ]);
+        $response = $this->get('/manage/videos/' . $video->id);
+        $response->assertStatus(200);
+        $response->assertViewIs('videos.manage.edit');
+        $response->assertViewHas('video', function($v) use ($video){
+            return $video->is($v);
+        });
+        $response->assertSee('<form data-qa="form_video_edit"', false);
+        $response->assertSeeText($video->title);
+        $response->assertSeeText($video->description);
+        $response->assertSee($video->url);
+
+    }
+
+    /** @test */
     public function user_with_permissions_can_delete_videos() {
         $this->loginAsVideoManager();
         $video = Video::create([

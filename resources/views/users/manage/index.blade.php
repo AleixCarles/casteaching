@@ -16,7 +16,7 @@
                                     <div class="md:col-span-1">
                                         <div class="px-4 sm:px-0">
                                             <h3 class="text-lg font-medium leading-6 text-gray-900">Users</h3>
-                                            <p class="mt-1 text-sm text-gray-600">Dades de l'usuari</p>
+                                            <p class="mt-1 text-sm text-gray-600">User data</p>
                                         </div>
                                     </div>
                                     <div class="mt-5 md:col-span-2 md:mt-0">
@@ -26,13 +26,13 @@
                                                 <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                                     <div>
                                                         <label for="name"
-                                                               class="block text-sm font-medium text-gray-700">Nom</label>
+                                                               class="block text-sm font-medium text-gray-700">Name</label>
                                                         <div class="mt-1">
                                                             <input required id="name" name="name" type="text"
                                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
-                                                                   placeholder="Nom">
+                                                                   placeholder="Name">
                                                         </div>
-                                                        <p class="mt-2 text-sm text-gray-500">Nom de l'usuari</p>
+                                                        <p class="mt-2 text-sm text-gray-500">Username</p>
                                                     </div>
                                                     <div>
                                                         <label for="email"
@@ -40,9 +40,9 @@
                                                         <div class="mt-1">
                                                             <input required id="email" name="email" type="email"
                                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
-                                                                   placeholder="Correu electrònic">
+                                                                   placeholder="example@example.com">
                                                         </div>
-                                                        <p class="mt-2 text-sm text-gray-500">Email de l'usuari</p>
+                                                        <p class="mt-2 text-sm text-gray-500">E-mail</p>
                                                     </div>
                                                     <div>
                                                         <label for="password"
@@ -50,14 +50,14 @@
                                                         <div class="mt-1">
                                                             <input required id="password" name="password" type="password"
                                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2"
-                                                                   placeholder="Constrasenya">
+                                                                   placeholder="********">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                                                     <button type="submit"
                                                             class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                                                        Crear
+                                                        Create
                                                     </button>
                                                 </div>
                                             </div>
@@ -89,8 +89,13 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody class="divide-y divide-gray-200 bg-white">
+                                    <tbody>
                                     @foreach($users as $user)
+                                        @if($loop->even)
+                                            <tr class="bg-white">
+                                        @else
+                                            <tr class="bg-gray-50"
+                                        @endif
                                         <tr>
                                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                                                 {{ $user->id }}</td>
