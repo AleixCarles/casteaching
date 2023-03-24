@@ -40,7 +40,7 @@ class VideosManageControllerTest extends TestCase
         $this->assertEquals('Prova del edit', $newVideo->title);
         $this->assertEquals('Laravel Eloquent', $newVideo->description);
         $this->assertEquals('https://youtu.be/Tt8z8X8xv14', $newVideo->url);
-        $this->assertEquals($video->id, $newVideo->url);
+        $this->assertEquals($video->id, $newVideo->id);
     }
 
         /** @test */

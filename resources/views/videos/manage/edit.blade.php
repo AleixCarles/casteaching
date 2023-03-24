@@ -21,6 +21,7 @@
                                     <div class="mt-5 md:col-span-2 md:mt-0">
                                         <form data-qa="form_video_edit" action="#" method="POST">
                                             @csrf
+                                            @method('PUT')
                                             <div class="shadow sm:overflow-hidden sm:rounded-md">
                                                 <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                                     <div>
@@ -70,7 +71,6 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 @endcan

@@ -60,6 +60,7 @@ class VideosManagerController extends Controller
         $video->title = $request->title;
         $video->description = $request->description;
         $video->url = $request->url;
+        $video->save();
         session()->flash('status','Successfully edited');
         return redirect()->route('manage.videos');
     }

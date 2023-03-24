@@ -122,15 +122,8 @@
                                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                                                 <a href="/videos/{{ $video->id }}" target="_blank"
                                                    class="text-indigo-600 hover:text-indigo-900">Show</a>
-                                                {{--                                        <a href="/users/{{ $user->id }}" target="_blank" class="text-indigo-600 hover:text-indigo-900">Show<span class="sr-only"></span></a>--}}
-                                                <form class="inline" method="POST"
-                                                      action="/manage/videos/{{ $video->id }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <a href="/videos/{{ $video->id }}" class="text-indigo-600 hover:text-indigo-900"
-                                                       onclick="event.preventDefault('form');
-                                                       this.closest('form').submit()">Edit</a>
-                                                </form>
+                                                <a href="/manage/videos/{{ $video->id }}" target="_blank"
+                                                   class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                                 <form class="inline" method="POST"
                                                       action="/manage/videos/{{ $video->id }}">
                                                     @csrf
