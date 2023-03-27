@@ -28,7 +28,7 @@
                                                         <label for="title"
                                                                class="block text-sm font-medium text-gray-700">Name</label>
                                                         <div class="mt-1">
-                                                            <input required id="title" name="title" type="text"
+                                                            <input required id="name" name="name" type="text"
                                                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm
                                                                    focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 " value="{{ $user->name }}">
                                                         </div>
@@ -38,24 +38,11 @@
                                                         <label for="description"
                                                                class="block text-sm font-medium text-gray-700">Email</label>
                                                         <div class="mt-1">
-                                                    <textarea required id="description" name="description" rows="3"
-                                                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{ $user->email }}</textarea>
+                                                    <input required id="email" name="email" type="text"
+                                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm
+                                                                   focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm p-2 " value="{{ $user->email }}">
                                                         </div>
                                                         <p class="mt-2 text-sm text-gray-500">Email for the user</p>
-                                                    </div>
-
-                                                    <div class="grid grid-cols-3 gap-6">
-                                                        <div class="col-span-3 sm:col-span-2">
-                                                            <label type="password"
-                                                                   class="block text-sm font-medium text-gray-700">Password</label>
-                                                            <div class="mt-1 flex rounded-md shadow-sm">
-                                                                <input required id="password" name="password" type="password"
-                                                                       class="block w-full flex-1 rounded-none rounded-r-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                                                       value="{{ $user->password }}">
-                                                            </div>
-                                                            <p class="mt-2 text-sm text-gray-500">User password.</p>
-
-                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
