@@ -34,12 +34,12 @@ class UsersManageController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        $user = User::create([
             'name' =>$request->name,
             'email' =>$request->email,
             'password' =>Hash::make($request->password)
         ]);
-
+        add_personal_team($user);
         session()->flash('status','Successfully created');
         return redirect()->route('manage.users');
     }
@@ -68,7 +68,6 @@ class UsersManageController extends Controller
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = Hash::make($request->password);
         $user->save();
         session()->flash('status','Successfully edited');
         return redirect()->route('manage.users');
