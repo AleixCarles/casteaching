@@ -15,6 +15,180 @@ class VideoApiTest extends TestCase
 {
     use RefreshDatabase;
 
+
+
+    /**
+     * @test
+     */
+    public function regular_users_cannot_update_videos()
+    {
+        $this->loginAsRegularUser();
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM'
+        ]);
+        $response = $this->putJson('api/videos/'. $video->id);
+        $response
+            ->assertStatus(403);
+
+        $newVideo = Video::find($video->id);
+        $this->assertEquals($newVideo->id, $video->id);
+        $this->assertEquals($newVideo->title, $video->title);
+        $this->assertEquals($newVideo->description, $video->description);
+        $this->assertEquals($newVideo->url, $video->url);
+    }
+
+
+    /**
+     * @test
+     */
+    public function guest_users_cannot_update_videos()
+    {
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM'
+        ]);
+        $response = $this->putJson('api/videos/'. $video->id);
+        $response
+            ->assertStatus(401);
+        $newVideo = Video::find($video->id);
+        $this->assertEquals($newVideo->id, $video->id);
+        $this->assertEquals($newVideo->title, $video->title);
+        $this->assertEquals($newVideo->description, $video->description);
+        $this->assertEquals($newVideo->url, $video->url);
+    }
+    /**
+     * @test
+     */
+    public function returns_202_when_updating_and_unexisting_video()
+    {
+        $this->loginAsVideoManager();
+        $response = $this->putJson('api/videos/999');
+        $response
+            ->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    public function user_with_permission_can_update_videos()
+    {
+        $this->loginAsVideoManager();
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM'
+        ]);
+        $response = $this->deleteJson('api/videos/'. $video->id);
+        $response
+            ->assertStatus(200)
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->has('id')
+                ->where('title', $video['title'])
+                ->where('url', $video['url'])
+                ->etc()
+            );
+        $this->assertNull( Video::find($response['id']));
+
+    }
+
+
+
+
+
+    /**
+     * @test
+     */
+    public function regular_users_cannot_destroy_videos()
+    {
+        $this->loginAsRegularUser();
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM'
+        ]);
+        $response = $this->deleteJson('api/videos/'. $video->id);
+        $response
+            ->assertStatus(403);
+        $this->assertNotNull(Video::find($video->id));
+    }
+
+
+    /**
+     * @test
+     */
+    public function guest_users_cannot_destroy_videos()
+    {
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM'
+        ]);
+        $response = $this->deleteJson('api/videos/'. $video->id);
+        $response
+            ->assertStatus(401);
+        $this->assertNotNull(Video::find($video->id));
+    }
+    /**
+     * @test
+     */
+    public function returns_202_when_deleting_and_unexisting_video()
+    {
+        $this->loginAsVideoManager();
+        $response = $this->deleteJson('api/videos/999');
+        $response
+            ->assertStatus(404);
+    }
+
+    /**
+     * @test
+     */
+    public function user_with_permission_can_destroy_videos()
+    {
+        $this->loginAsVideoManager();
+        $video = Video::create([
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM'
+        ]);
+        $response = $this->deleteJson('api/videos/'. $video->id);
+        $response
+            ->assertStatus(200)
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->has('id')
+                ->where('title', $video['title'])
+                ->where('url', $video['url'])
+                ->etc()
+            );
+        $this->assertNull( Video::find($response['id']));
+
+    }
+
+
+
+
+
+
+
+    /**
+     * @test
+     */
+    public function regular_users_cannot_store_videos()
+    {
+        $this->loginAsRegularUser();
+
+        $response = $this->postJson('api/videos', $video = [
+            'title' => 'TDD 101',
+            'description' => 'Bla bla bla',
+            'url' => 'https://www.youtube.com/embed/2NnTOzZBieM']);
+        $response
+            ->assertStatus(403);
+        $this->assertCount(0,Video::all());
+    }
+
+
     /**
      * @test
      */
@@ -105,5 +279,10 @@ class VideoApiTest extends TestCase
     private function loginAsVideoManager()
     {
         Auth::login(create_video_manager_user());
+    }
+    private function loginAsRegularUser()
+    {
+        Auth::login(create_regular_user());
+
     }
 }

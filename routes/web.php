@@ -32,8 +32,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
     Route::get('manage/videos', [ VideosManagerController::class,'index'])->middleware(['can:videos_manage_index'])
         ->name('manage.videos');
-    Route::post('manage/videos',[ VideosManagerController::class,'store']);
 
+    Route::post('manage/videos',[ VideosManagerController::class,'store'])->middleware(['can:videos_manage_store']);
     Route::delete('manage/videos/{id}',[ VideosManagerController::class,'destroy'])->middleware(['can:videos_manage_destroy']);
     Route::get('manage/videos/{id}',[ VideosManagerController::class,'edit'])->middleware(['can:videos_manage_edit']);
     Route::put('manage/videos/{id}',[ VideosManagerController::class,'update'])->middleware(['can:videos_manage_update']);
