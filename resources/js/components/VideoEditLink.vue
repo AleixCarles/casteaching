@@ -1,0 +1,22 @@
+<template>
+    <div>
+        <a :href="'/vue/manage/videos/' + video.id " target="_blank"
+           class="text-indigo-600 hover:text-indigo-900">Edit</a>
+    </div>
+</template>
+
+<script>
+export default {
+    name: "VideoEditLink",
+    props: {
+        video: {
+            type: Object,
+            required: true
+        }
+    }
+}
+</script>
+
+<style scoped>
+
+</style>
