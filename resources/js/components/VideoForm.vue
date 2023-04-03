@@ -10,7 +10,7 @@
                         </div>
                     </div>
                     <div class="mt-5 md:col-span-2 md:mt-0">
-                        <form data-qa="form_video_create" @submit.prevent="store">
+                        <form data-qa="form_video_create" @submit.prevent="store" method="POST">
                             <div class="shadow sm:overflow-hidden sm:rounded-md">
                                 <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
                                     <div>
@@ -27,7 +27,7 @@
                                         <label for="description"
                                                class="block text-sm font-medium text-gray-700">Description</label>
                                         <div class="mt-1">
-                                                    <textarea required id="description" name="description" rows="3" v-model="video.description"
+                                                    <textarea required id="description" v-model="video.description" name="description" rows="3"
                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                                               placeholder="Description"></textarea>
                                         </div>
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                                    <button @click="store" type="submit"
+                                    <button type="submit"
                                             class="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                                         Create
                                     </button>
@@ -67,22 +67,28 @@
 </template>
 
 <script>
+import bus from '../bus.js'
 export default {
     name: "VideoForm",
     data(){
-        return {
+        return{
             video: {}
         }
     },
     methods: {
         store(){
-            window.casteaching.video.create({
-                title: this.video.title,
-                description: this.video.description,
-                url: this.video.url
-            })
-        }
+            try {
+                window.casteaching.video.create({
+                    title: this.video.title,
+                    description: this.video.description,
+                    url: this.video.url
+                })
+                bus.$emit('created')
+                bus.$emit('status','Video created successfully')
+            }catch (error){ console.log(error);}
 
+
+        }
     }
 }
 </script>

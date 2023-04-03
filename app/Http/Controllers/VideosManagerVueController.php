@@ -9,7 +9,7 @@ class VideosManagerVueController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
+     *ç
      * @return \Illuminate\Http\Response
      */
     public function index()
