@@ -183,6 +183,18 @@ if (! function_exists('create_permissions')) {
     }
 }
 
+if (! function_exists('create_sample_video')) {
+    function create_sample_video()
+    {
+        return Video::create([
+            'title' => 'Video 1',
+            'description' => 'Prova',
+            'url' => 'https://youtu.be/syqUFgWSKcA'
+        ]);
+    }
+}
+
+
 if (! function_exists('create_sample_videos')) {
     function create_sample_videos()
     {
