@@ -41,10 +41,7 @@ class VideosManagerController extends Controller
     /**
      * R -> NO LLISTA -> Individual ->
      */
-    public function show($id)
-    {
-        //
-    }
+
 
     /**
      * U -> update -> Form

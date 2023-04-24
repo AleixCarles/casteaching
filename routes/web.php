@@ -3,6 +3,7 @@
 use App\Http\Controllers\UsersManageController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManagerController;
+use App\Http\Controllers\VideosManagerVueController;
 use App\Models\Video;
 use Illuminate\Support\Facades\Route;
 
@@ -32,8 +33,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     })->name('dashboard');
     Route::get('manage/videos', [ VideosManagerController::class,'index'])->middleware(['can:videos_manage_index'])
         ->name('manage.videos');
-    Route::post('manage/videos',[ VideosManagerController::class,'store']);
 
+    Route::post('manage/videos',[ VideosManagerController::class,'store'])->middleware(['can:videos_manage_store']);
     Route::delete('manage/videos/{id}',[ VideosManagerController::class,'destroy'])->middleware(['can:videos_manage_destroy']);
     Route::get('manage/videos/{id}',[ VideosManagerController::class,'edit'])->middleware(['can:videos_manage_edit']);
     Route::put('manage/videos/{id}',[ VideosManagerController::class,'update'])->middleware(['can:videos_manage_update']);
@@ -44,4 +45,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::get('/manage/users/{id}', [UsersManageController::class, 'edit'])->middleware(['can:users_manage_edit']);
     Route::put('/manage/users/{id}', [UsersManageController::class, 'update'])->middleware(['can:users_manage_update']);
     Route::delete('/manage/users/{id}', [UsersManageController::class, 'destroy'])->middleware(['can:users_manage_destroy']);
+
+
+    Route::get('/vue/manage/videos', [ VideosManagerVueController::class,'index'])->middleware(['can:videos_manage_index'])
+        ->name('manage.vue.videos');
+
+    Route::post('/vue/manage/videos',[ VideosManagerVueController::class,'store'])->middleware(['can:videos_manage_store']);
+    Route::delete('/vue/manage/videos/{id}',[ VideosManagerVueController::class,'destroy'])->middleware(['can:videos_manage_destroy']);
+    Route::get('/vue/manage/videos/{id}',[ VideosManagerVueController::class,'edit'])->middleware(['can:videos_manage_edit']);
+    Route::put('/vue/manage/videos/{id}',[ VideosManagerVueController::class,'update'])->middleware(['can:videos_manage_update']);
 });
+
+
+
