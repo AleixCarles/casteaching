@@ -211,6 +211,7 @@ class VideosManageControllerTest extends TestCase
      */
     public function superadmins_can_manage_videos()
     {
+        $this->withExceptionHandling();
         $this->loginAsSuperAdmin();
 
         $response = $this->get('/manage/videos');
