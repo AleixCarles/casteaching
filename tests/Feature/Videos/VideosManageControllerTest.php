@@ -2,11 +2,13 @@
 
 namespace Tests\Feature\Videos;
 
+use App\Events\VideoCreated;
 use App\Models\User;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Tests\Feature\Traits\CanLogin;
@@ -108,11 +110,15 @@ class VideosManageControllerTest extends TestCase
     {
         $this->loginAsVideoManager();
 
-        $video = objectify([
+        $video = objectify($videoArray =[
             'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',
             'description' => 'Laravel Eloquent inserts  CSRF Token, redireccions HTTP i missatges de status',
             'url' => 'https://youtu.be/Tt8z8X8xv14',
         ]);
+
+        Event::fake();
+        $response = $this->post('/manage/videos',$videoArray);
+        Event::assertDispatched(VideoCreated::class);
 
         $response = $this->post('/manage/videos',[
             'title' => 'Laravel Eloquent inserts CSRF Token, redireccions HTTP i missatges',

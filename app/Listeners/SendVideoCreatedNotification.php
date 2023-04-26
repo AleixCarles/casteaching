@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Notification;
 class SendVideoCreatedNotification
 {
 
+    public static function testedBy()
+    {
+        return SendVideoCreatedNotificationTest::class;
+    }
     /**
      * Handle the event.
      *

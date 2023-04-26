@@ -7,5 +7,9 @@ return[
         'email' => env('DEFAULT_USER_EMAIL','aleixcarles@gmail.com'),
         'password' => env('DEFAULT_USER_PASSWORD','12345678')
 
-    ]
+    ],
+    'admins' => [
+    'sergiturbadenas@gmail.com'
+]
 ];
+
