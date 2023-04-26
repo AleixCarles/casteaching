@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Events\VideoCreated;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Notification;
-class SendVideoCreatedNotification
+class SendVideoCreatedNotification implements ShouldQueue
 {
 
     public static function testedBy()
