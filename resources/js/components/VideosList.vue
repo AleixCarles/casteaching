@@ -83,19 +83,20 @@ export default {
         }
     },
     async created() {
-        this.getVideos()
-        bus.$on('created', () =>{
-            this.refresh()
-        });  bus.$on('updated', () =>{
-            this.refresh()
+        await this.getVideos()
+        bus.$on('created', async() =>{
+            await this.refresh()
+        });  bus.$on('updated', async() =>{
+            await this.refresh()
         });
     },
     methods: {
         async getVideos(){
             this.videos = await window.casteaching.videos()
+
         },
         async refresh() {
-            this.getVideos()
+            await this.getVideos()
         }
     }
 }

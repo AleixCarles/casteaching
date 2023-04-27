@@ -78,18 +78,18 @@ export default {
         }
     },
     methods: {
-        save(){
+        async save(){
             if (this.status === 'creating'){
-                this.store()
+              await this.store()
             }
             if (this.status === 'editing'){
-                this.update()
+                await this.update()
             }
 
         },
-        store(){
+        async store(){
             try {
-                window.casteaching.video.create({
+              await window.casteaching.video.create({
                     title: this.video.title,
                     description: this.video.description,
                     url: this.video.url
@@ -98,9 +98,9 @@ export default {
                 bus.$emit('status','Video created successfully')
             }catch (error){ console.log(error);}
         },
-        update(){
+        async update(){
             try {
-                window.casteaching.video.update(this.video.id , {
+                await window.casteaching.video.update(this.video.id , {
                     title: this.video.title,
                     description: this.video.description,
                     url: this.video.url
