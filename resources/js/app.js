@@ -1,5 +1,5 @@
 import Alpine from 'alpinejs';
-import casteaching from 'casteaching'
+import casteaching from '@acacha/casteaching'
 import Vue from 'vue/dist/vue.js'
 import './bootstrap';
 import VideosList from "./components/VideosList.vue";
