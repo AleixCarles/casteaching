@@ -72,7 +72,6 @@ import bus from '../bus.js'
 export default {
     name: "VideosList",
     components: {
-        VideoDestroyLink,
         'video-show-link': VideoShowLink,
         'video-edit-link': VideoEditLink,
         'video-destroy-link': VideoDestroyLink
