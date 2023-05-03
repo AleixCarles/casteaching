@@ -9,11 +9,16 @@ import casteaching from '@acacha/casteaching'
 import Status from "./components/Status.vue";
 
 
+window.Alpine = Alpine;
+
 
 const api = casteaching({baseUrl: import.meta.env.VITE_API_URL});
 api.setToken('szvy8FoFP7zbjcW7Qi3f7EsI7KgUtwULiggYKIzy')
 window.casteaching = api;
+
 Alpine.start();
+
+
 
 
 window.Vue = Vue
@@ -25,3 +30,5 @@ window.Vue.component('status', Status )
 const app = new window.Vue({
     el: '#vueapp',
 });
+
+//  rn35XEX5dZmZU04MGZ2V0YXiCW2OZzfd5GykUTm9
