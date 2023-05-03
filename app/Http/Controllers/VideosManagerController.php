@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Events\VideoCreated;
 use App\Models\Video;
 use Illuminate\Http\Request;
+use Tests\Feature\Videos\VideosManageControllerTest;
 
 class VideosManagerController extends Controller
 {
     public static function testedBy()
     {
-        return VideosManagerController::class;
+        return VideosManageControllerTest::class;
     }
 
     public function index()
@@ -27,10 +28,18 @@ class VideosManagerController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'url' => 'required',
+        ]);
+
         $video = Video::create([
             'title' => $request->title,
             'description' => $request->description,
             'url' => $request->url,
+            'serie_id' => $request->serie_id,
+            'user_id' => $request->user_id
         ]);
         session()->flash('status','Successfully created');
 
