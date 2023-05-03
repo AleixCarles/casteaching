@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SanctumTokenController;
 use App\Http\Controllers\UsersManageController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManagerController;
@@ -18,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\LandingPageController::class, 'show']);
 Route::get('/videos/{id}', [VideosController::class,'show']);
 
 Route::get('manage/videos', [ VideosManagerController::class,'index'])->middleware(['can:videos_manage_index'])
