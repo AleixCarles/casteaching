@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\SanctumTokenController;
+use App\Http\Controllers\GithubAuthController;
 use App\Http\Controllers\UsersManageController;
 use App\Http\Controllers\VideosController;
 use App\Http\Controllers\VideosManagerController;
 use App\Http\Controllers\VideosManagerVueController;
-use App\Models\Video;
 use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,5 +55,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::put('/vue/manage/videos/{id}',[ VideosManagerVueController::class,'update'])->middleware(['can:videos_manage_update']);
 });
 
+Route::get('/auth/redirect', [GithubAuthController::class,'redirect']);
+Route::get('/auth/callback', [GithubAuthController::class,'callback']);
 
 
