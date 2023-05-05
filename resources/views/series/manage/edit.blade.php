@@ -11,7 +11,8 @@
         <div class="mx-auto sm:px-6 lg:px-8 w-full max-w-7xl">
 
             @can('series_manage_create')
-                <x-jet-form-section>
+                <x-status></x-status>
+                <x-jet-form-section data-qa="form_serie_edit">
                     <x-slot name="title">
                         {{ __('Series') }}
                     </x-slot>
@@ -45,7 +46,7 @@
 
                 <x-jet-section-border/>
 
-                <x-jet-form-section submit="TODO">
+                <x-jet-form-section data-qa="form_serie_image_edit" action="/manage/series/{{ $serie->id }}/image" enctype="multipart/form-data">
                     <x-slot name="title">
                         {{ __('Imatge de la sèrie') }}
                     </x-slot>
@@ -55,9 +56,11 @@
                     </x-slot>
 
                     <x-slot name="form">
+                        @csrf
+                        @method('PUT')
                         <div class="col-span-6 sm:col-span-4">
                             <x-jet-label for="image" value="{{ __('Image') }}" />
-                            <input type="file" id="image" name="image" accept="image/png, image/png">
+                            <input type="file" id="image" name="image" accept="image/png, image/jpeg">
                             <x-jet-input-error for="image" class="mt-2" />
                         </div>
                     </x-slot>
