@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Serie;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Tests\Feature\Series\SeriesImagesManageControllerTest;
 
@@ -15,6 +16,9 @@ class SeriesImagesManageController extends Controller
 
     public function update(Request $request)
     {
+        $request->validate([
+            'image' => ['image','dimensions:min_height=400,ratio=16/9'],
+        ]);
         $serie = Serie::findOrFail($request->id);
         $serie->image = $request->file('image')->store('series','public');
         $serie->save();

@@ -4,9 +4,11 @@ use App\Models\Serie;
 use App\Models\Team;
 use App\Models\User;
 use App\Models\Video;
+use Illuminate\Http\File;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
 
 if (! function_exists('create_default_user')) {
@@ -327,29 +329,38 @@ if (! function_exists('objectify')){
         return new DomainObject($array);
     }
 }
-if (! function_exists('create_sample_series')){
-    function create_sample_series(){
+if (! function_exists('create_sample_series')) {
+    function create_sample_series()
+    {
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/tdd.png')));
         $serie1 = Serie::create([
             'title' => 'TDD (Test Driven Development)',
             'description' => 'Bla bla bla',
-            'image' => 'tdd.png',
+            'image' => $path,
             'teacher_name' => 'Sergi Tur Badenas',
-            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com'),
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
         ]);
+
+        sleep(1);
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/tdd.png')));
 
         $serie2 = Serie::create([
             'title' => 'Crud amb Vue i Laravel',
             'description' => 'Bla bla bla',
-            'image' => 'tdd.png',
+            'image' => $path,
             'teacher_name' => 'Sergi Tur Badenas',
-            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com'),
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
         ]);
+
+        sleep(1);
+        $path = Storage::disk('public')->putFile('series', new File(base_path('series_photos/ionic_real_world.png')));
+
         $serie3 = Serie::create([
             'title' => 'ionic Real world',
             'description' => 'Bla bla bla',
-            'image' => 'ionic_real_world.png',
+            'image' => $path,
             'teacher_name' => 'Sergi Tur Badenas',
-            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com'),
+            'teacher_photo_url' => 'https://www.gravatar.com/avatar/' . md5('sergiturbadenas@gmail.com')
         ]);
         return [$serie1,$serie2,$serie3];
     }
