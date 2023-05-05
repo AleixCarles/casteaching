@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\VideoCreated;
 use App\Models\Video;
+use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Tests\Feature\Videos\VideosManageControllerTest;
 

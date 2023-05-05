@@ -108,4 +108,8 @@ class User extends Authenticatable
         add_personal_team($user);
         return $user;
     }
+    public function videos()
+    {
+        return $this->hasMany(Video::class);
+    }
 }

@@ -40,6 +40,11 @@ class Video extends Model
         return $this->belongsTo(Serie::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function setSerie(Serie $serie)
     {
         $this->serie_id = $serie->id;
