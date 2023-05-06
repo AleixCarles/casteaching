@@ -51,6 +51,6 @@ class SerieTest extends TestCase
         $this->assertNull($serie->image);
 
         $this->assertNotNull($serie->image_url);
-        $this->assertEquals('series/placeholder.png',$serie->image_url);
+        $this->assertEquals('series/random.png',$serie->image_url);
     }
 }
