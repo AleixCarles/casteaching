@@ -45,4 +45,10 @@ class Serie extends Model
             get: fn ($value) => is_null($this->image) ? 'series/random.png' : $this->image ,
         );
     }
+    protected function url(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => count($this->videos) > 0 ? '/videos/' . $this->videos->first()->id : '#'
+        );
+    }
 }
