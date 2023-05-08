@@ -7,6 +7,7 @@ use App\Http\Controllers\VideosController;
 use App\Http\Controllers\SeriesManageController;
 use App\Http\Controllers\VideosManagerController;
 use App\Http\Controllers\VideosManagerVueController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Kanuu\Laravel\Facades\Kanuu;
 use Laravel\Socialite\Facades\Socialite;
@@ -30,6 +31,11 @@ Route::get('manage/videos', [ VideosManagerController::class,'index'])->middlewa
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+
+    Route::get('/subscribe', function () {
+        return redirect(route('kanuu.redirect', Auth::user()));
+    })->name('subscribe');
+
     Route::get('/dashboard',function (){
         return view('dashboard');
     })->name('dashboard');
